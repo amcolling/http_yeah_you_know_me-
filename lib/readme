@@ -1,0 +1,35 @@
+equire 'socket'
+#a file that we are accessing by requiring
+require 'pry'
+tcp_server = TCPServer.new(9292)
+#creating new server, and passing a port number
+puts "Ready for a request"
+client = tcp_server.accept #to this connection- address(penpal)
+
+
+request_lines = [] #empty array to store request lines
+#line = connection.gets.chomp
+while line = client.gets and !line.chomp.empty?#looping sending information into the empty array (penpal getting message)
+  #line = connection.gets.chomp
+  request_lines << line.chomp
+end
+
+puts "Got this request:"
+puts request_lines.inspect #prints to the browser
+
+puts "Sending response."
+response = "<pre>" + request_lines.join("\n") + "</pre>"
+output = "<html><head></head><body>#{response}</body></html>"
+headers = ["http/1.1 200 ok",
+          "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
+          "server: ruby",
+          "content-type: text/html; charset=iso-8859-1",
+          "content-length: #{output.length}\r\n\r\n"].join("\r\n")#new line with blank line
+client.puts headers
+client.puts output #saying write this stuff on the letter
+
+puts ["Wrote this response:", headers, output].join("\n")
+client.close #response closed- send letter
+puts "\nResponse complete, exiting."
+
+#what is our program actually doing?
