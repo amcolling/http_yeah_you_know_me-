@@ -9,16 +9,20 @@ require 'socket'
 class Server
 
   attr_reader :server,
-              :count,
+              :hello_counter,
               :client
 
   def initialize
     @server = TCPServer.new(9292)
+    @hello_counter = 0
     @counter = 0
     end
 
 
+
   def start_server
+    @counter += 1
+    @hello_counter += 1
     @client = @server.accept
     puts "Ready for a request"
     request_lines = []
@@ -41,12 +45,13 @@ class Server
 
 
   def response(request_lines)
-    "<pre>" + "Hello World" + "</pre>"
+    "<pre>" + "Hello World(#{hello_counter})" + "</pre>"
   end
 
 
+
   def output(message)
-    "<html><head></head><body>#{message}</body></html>"
+    "<html><head></head><body>#{message} </body></html>"
   end
 
 
@@ -54,6 +59,9 @@ class Server
     client.puts headers
     client.puts output
   end
+
+
+
 
   # puts "Got this request:"
   # puts @request_lines.inspect
@@ -66,4 +74,6 @@ class Server
   # end
 end
   x = Server.new
-  x.start_server
+  loop do
+    x.start_server
+  end

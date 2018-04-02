@@ -6,8 +6,8 @@ require './lib/server'
     assert_instance of Server, server
     end
 
-    def test_counter
-    server = Server.new
-    assert_equal 0, server.count
-    end
-  end
+  #   def test_counter
+  #   server = Server.new
+  #   assert_equal 0, server.count
+  #   end
+  # end
