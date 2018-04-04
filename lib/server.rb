@@ -1,21 +1,19 @@
-# Iteration 0 - Hello, World
-# Build a web application/server that:
-#
-# listens on port 9292
-# responds to HTTP requests
-# responds with a valid HTML response that displays the words Hello, World! (0) where the 0 increments each request until the server is restarted
+
 require 'socket'
+require './lib/parser'
 
 class Server
 
   attr_reader :server,
               :hello_counter,
               :client
+              :parser
 
   def initialize
     @server = TCPServer.new(9292)
     @hello_counter = 0
     @counter = 0
+    @parser = Parser.new(self)
     end
 
 
@@ -24,7 +22,6 @@ class Server
     @counter += 1
     @hello_counter += 1
     @client = @server.accept
-    puts "Ready for a request"
     request_lines = []
     while line = @client.gets and !line.chomp.empty?
       request_lines << line.chomp
@@ -44,6 +41,7 @@ class Server
   end
 
 
+
   def response(request_lines)
     "<pre>" + "Hello World(#{hello_counter})" + "</pre>"
   end
@@ -51,27 +49,28 @@ class Server
 
 
   def output(message)
-    "<html><head></head><body>#{message} </body></html>"
+    "<html><head></head><body>#{message} #{@parser} </body></html>"
   end
 
 
-  def output_message(headers,output)
-    client.puts headers
+  def output_message(output, headers)
     client.puts output
+    client.puts headers
   end
 
+  def server_response(client, output, response)
+  client.puts output
+  client.close
+  @tcp_server.close if response == "Total Requests:"
+  end
+
+  # puts ["Wrote this response:", output_message].join("\n")
+  # client.close
+  # puts "\nResponse complete, exiting."
 
 
 
-  # puts "Got this request:"
-  # puts @request_lines.inspect
-  #
-  # puts "Sending response."
-  #
-  #   puts ["Wrote this response:", headers, output].join("\n")
-  #   client.close
-  #   puts "\nResponse complete, exiting."
-  # end
+
 end
   x = Server.new
   loop do
