@@ -8,21 +8,19 @@ class  TestParser< Minitest::Test
   assert_instance of Parser, parser
   end
 
-  def test_get_verb
-    parser = Parser.new("post")
-    assert_equal "POST", parser.get_verb
-  end
-
-  def test_get_path
+  def test_verb
     parser = Parser.new
-    assert_equal "/", parser.get_path
+    assert_equal "POST", Parser, parser
   end
 
-  def test_get protocol
+  def test_host
     parser = Parser.new
-    assert_equal, "HTTP/1.1"parser.get_protocol
-  end
-
+    assert_equal "/", Parser, parser
+  end 
+  # def test_strings_into_hash
+  #   parser = Parser.new
+  #   assert_equal request_lines, Parser, parser
+  # end
 
 
 end

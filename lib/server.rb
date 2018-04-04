@@ -6,7 +6,7 @@ class Server
 
   attr_reader :server,
               :hello_counter,
-              :client
+              :client,
               :parser
 
   def initialize
@@ -19,7 +19,6 @@ class Server
 
 
   def start_server
-
     @counter += 1
     @hello_counter += 1
     @client = @server.accept
@@ -45,21 +44,23 @@ class Server
 
 
   def response(request_lines)
-    # hello_world
+      # hello_world
     make_diagnostics(request_lines)
-  end
+    end
 
-  def hello_world
-    "<pre>" + "Hello World(#{hello_counter})" + "</pre>"
+  def hello_world(request_lines)
+    # "<pre>" + "Hello World(#{hello_counter})" + "</pre>"
+    "<pre>#{verb}<br>#{host}" + "</pre>"
   end
 
   def make_diagnostics(request_lines)
     request_lines
-    end
+  end
 
 
 
   def output(message)
+    # "<html><head></head><body><pre>" + "Verb: #{verb}\nPath: #{path}\nProtocol: #{message}\nHost: #{host}\nPort: #{port}\nOrigin: #{origin}\n#{accept}\n"  + "</pre></body></html>"
     "<html><head></head><body>#{message} #{@parser} </body></html>"
   end
 
@@ -67,6 +68,10 @@ class Server
   def output_message(output, headers)
     client.puts output
     client.puts headers
+  end
+
+  def request_output
+    request_output
   end
 
   def server_response(client, output, response)
