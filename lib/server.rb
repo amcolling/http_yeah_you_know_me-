@@ -19,6 +19,7 @@ class Server
 
 
   def start_server
+
     @counter += 1
     @hello_counter += 1
     @client = @server.accept
@@ -26,6 +27,7 @@ class Server
     while line = @client.gets and !line.chomp.empty?
       request_lines << line.chomp
     end
+    puts request_lines
     message = response(request_lines)
     output_2 = output(message)
     headers_2 = headers(output_2)
@@ -43,8 +45,17 @@ class Server
 
 
   def response(request_lines)
+    # hello_world
+    make_diagnostics(request_lines)
+  end
+
+  def hello_world
     "<pre>" + "Hello World(#{hello_counter})" + "</pre>"
   end
+
+  def make_diagnostics(request_lines)
+    request_lines
+    end
 
 
 
@@ -74,5 +85,6 @@ class Server
 end
   x = Server.new
   loop do
+    puts "Ready for request"
     x.start_server
   end

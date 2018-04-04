@@ -18,6 +18,10 @@ class  TestParser< Minitest::Test
     assert_equal "/", parser.get_path
   end
 
+  def test_get protocol
+    parser = Parser.new
+    assert_equal, "HTTP/1.1"parser.get_protocol
+  end
 
 
 

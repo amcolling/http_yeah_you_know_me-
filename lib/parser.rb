@@ -8,22 +8,16 @@ class Parser
     @server = server
   end
 
-  def get_verb
-    parser.get_verb
-    end
+
 
 
   # response = http.request(request)
   # puts response.read_body
-  # def make_diagnostics
-  #   #get verb
-  #   #get Path
-  #   #get Port
-  # end
 
-  # def get_verb(request_lines)
-  #   "Verb: "POST"#{request_lines[0].split[0]} "
-  # end
+
+  def get_verb(request_lines)
+    "Verb: get#{request_lines[0].split[0]} "
+  end
 
   def get_path(request_lines)
     server.router.determine_path(request_lines[0].split[0], request_lines[0].split[1])
