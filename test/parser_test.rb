@@ -4,25 +4,34 @@ require './lib/parser'
 
 class  TestParser< Minitest::Test
   def test_it_exists
-  parser = Parser.new
-  assert_instance of Parser, parser
+    parser = Parser.new
+    assert_instance of Parser, parser
   end
 
   def test_verb
-    parser = Parser.new
-    assert_equal "POST", Parser, parser
+    parser = Parser.new(string)
+    assert_equal "POST", Parser, parser.verb
   end
 
   def test_host
-    parser = Parser.new
-    assert_equal "/", Parser, parser
-  end 
-  # def test_strings_into_hash
-  #   parser = Parser.new
-  #   assert_equal request_lines, Parser, parser
-  # end
+    parser = Parser.new(string)
+    assert_equal "/", parser.host
+  end
 
+  def test_protocol
+    parser = Parser.new(string)
+    assert_equal "HTTP/1.1", parser.protocol
+  end
 
+  def test_port
+    parser = Parser.new(string)
+    assert_equal "9292", parser.port
+  end
+
+  def test_origin
+    parser = Parser.new(string)
+    assert_equal "127.0.0.1", parser.port
+  end
 end
 
 

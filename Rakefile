@@ -1,5 +1,5 @@
 desc "run all tests"
 
-task: test do
+   test do
   ruby "test/*_test.rb"
 end

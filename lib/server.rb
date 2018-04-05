@@ -13,8 +13,7 @@ class Server
     @server = TCPServer.new(9292)
     @hello_counter = 0
     @counter = 0
-    @parser = Parser.new(self)
-    end
+  end
 
 
 
@@ -80,14 +79,12 @@ class Server
   @tcp_server.close if response == "Total Requests:"
   end
 
-  # puts ["Wrote this response:", output_message].join("\n")
-  # client.close
-  # puts "\nResponse complete, exiting."
-
-
-
-
+  def close_server
+    @client.close
+    puts "\nResponse complete, exiting."
+  end
 end
+
   x = Server.new
   loop do
     puts "Ready for request"
